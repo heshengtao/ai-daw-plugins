@@ -1,0 +1,8 @@
+# AI DAW 扩展清单：一行一个 npm 包名；# 开头是注释。
+#
+# 加完之后在 ai-daw 仓库跑：
+#   node tools/build-extension-index.mjs --input plugins.txt --output index.json \
+#     --title "AI DAW 扩展" --description "社区扩展"
+#
+# 例：
+# @aidaw/hello-extension
