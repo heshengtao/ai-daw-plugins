@@ -1,0 +1,44 @@
+name: Validate index
+
+on:
+  push:
+    branches: [main]
+    paths: ["index.json"]
+  pull_request:
+    paths: ["index.json"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Validate index.json
+        run: |
+          node --input-type=module -e '
+            import { readFileSync } from "node:fs";
+            const doc = JSON.parse(readFileSync("index.json", "utf8"));
+            const fail = (message) => { console.error("✗", message); process.exit(1); };
+            const localized = (value) => typeof value === "string"
+              ? value.trim().length > 0
+              : value && typeof value === "object" && Object.values(value).every((text) => typeof text === "string" && text.trim().length > 0);
+            if (doc.format !== 1) fail("format 必须是 1");
+            if (!localized(doc.title)) fail("title 必须是字符串或语言映射");
+            if (!Array.isArray(doc.plugins)) fail("plugins 必须是数组");
+            for (const [index, plugin] of doc.plugins.entries()) {
+              const at = `plugins[${index}]`;
+              if (typeof plugin.name !== "string" || !plugin.name.trim()) fail(`${at}.name 缺失`);
+              if (!Array.isArray(plugin.versions) || plugin.versions.length === 0) fail(`${at}.versions 不能为空`);
+              for (const [vIndex, version] of plugin.versions.entries()) {
+                const vAt = `${at}.versions[${vIndex}]`;
+                if (typeof version.version !== "string") fail(`${vAt}.version 缺失`);
+                if (version.source?.type !== "npm") fail(`${vAt}.source.type 目前只支持 npm`);
+                if (typeof version.engines?.aidaw !== "string" || !version.engines.aidaw.trim()) {
+                  fail(`${vAt}.engines.aidaw 必须是非空 semver range`);
+                }
+              }
+            }
+            console.log(`✓ index.json 合法（${doc.plugins.length} 个扩展）`);
+          '
