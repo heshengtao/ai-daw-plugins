@@ -1,11 +1,15 @@
 # AI DAW 扩展市场索引
 
 这是 [AI DAW](https://github.com/heshengtao/ai-daw) 的**扩展插件**（应用级插件：MCP 工具、右栏面板、内容包）的商店仓库。
-应用默认从这里读 `index.json`：
+应用默认从 **GitHub Pages** 读 `index.json`：
 
 ```
-https://raw.githubusercontent.com/heshengtao/ai-daw-plugins/main/index.json
+https://heshengtao.github.io/ai-daw-plugins/index.json
 ```
+
+（Pages 从 `main` 分支根目录发布，推送后约一分钟生效。raw 地址
+`https://raw.githubusercontent.com/heshengtao/ai-daw-plugins/main/index.json` 也能读，
+但在部分网络下会被 TLS reset。）
 
 > 这里的「扩展」不是 VST3 / CLAP 音频插件。扩展是 npm 包，装进 daemon 之后能给 AI 加工具、
 > 给界面加面板；音频插件仍然走原来的插件管理器。
