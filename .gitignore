@@ -1,0 +1,4 @@
+# 生成器的缓存目录（不会进版本库）
+.plugin-market-cache/
+*.tmp
+.DS_Store
