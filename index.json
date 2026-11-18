@@ -1,0 +1,12 @@
+{
+  "format": 1,
+  "title": {
+    "zh": "AI DAW 扩展",
+    "en": "AI DAW Extensions"
+  },
+  "description": {
+    "zh": "社区维护的 AI DAW 应用级扩展索引（MCP 工具 / 面板 / 内容包）。",
+    "en": "Community index of AI DAW app-level extensions (MCP tools, panels, content packs)."
+  },
+  "plugins": []
+}
